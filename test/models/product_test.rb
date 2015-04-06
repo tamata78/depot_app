@@ -63,7 +63,7 @@ class ProductTest < ActiveSupport::TestCase
                                          price: 1,
                                          image_url: "fred.jpg")
         assert !product.save
-        assert_equal I18n.translate('activerecord.errors.message.taken'),
+        assert_equal "has already been taken",
                             product.errors[:title].join('; ')
   end
 
@@ -73,7 +73,7 @@ class ProductTest < ActiveSupport::TestCase
                                          price: 1,
                                          image_url: "fred.jpg")
 
-    assert_equal product.invalid?, "#{product.title} shouldn't be valid"
+    assert product.invalid?, "#{product.title} shouldn't be valid"
   end
 
 end

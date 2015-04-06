@@ -1,4 +1,7 @@
 class Product < ActiveRecord::Base
+  has_many :line_items
+  before_destroy :ensure_not_referenced_by_any_line_item
+
   #各項目の必須チェック
   validates :title, :description, :image_url, presence: true
   #数値かつ指定数値以上かをチェック
@@ -12,4 +15,15 @@ class Product < ActiveRecord::Base
   }
   #商品名が１０文字以上の長さかをチェック
   validates :title, length: {minimum: 10}
+
+  private
+    #この商品を参照しているカート内の品目が存在しているか
+    def ensure_not_referenced_by_any_line_item
+      if line_items.empty?
+        return true
+      else
+        errors.add(:base, '品目が存在しています')
+        return false
+      end
+    end
 end
