@@ -23,8 +23,26 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0',          group: :doc
 
+gem 'bcrypt-ruby', '3.1.2'
+
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 gem 'spring',        group: :development
+
+# 本番用でデプロイ時に実行できないため、こちらにも追加
+gem 'mysql2'
+
+group :development do
+  # フッターにデバック情報を表示
+  gem 'rails-footnotes', '>= 3.7.9'
+  # エラー画面をわかりやすく整形してくれる
+  gem 'better_errors'
+  # better_errorsの画面上にirb/pry(PERL)を表示する
+  gem 'binding_of_caller'
+  # ブレークポイントを張って、ステップ実行可能とする
+  gem 'pry-byebug'
+end
+
+gem 'will_paginate', '~> 3.0'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

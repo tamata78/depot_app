@@ -1,15 +1,29 @@
 Rails.application.routes.draw do
-  resources :line_items
+  # adminにadminコントローラのindexメソッドを紐付け
+  get 'admin' => 'admin#index'
 
-  resources :carts
+  # controllerでくくる事でsessionの記載を省く
+  controller :sessions do
+    get 'login' => :new
+    post 'login' =>:create
+    delete 'logout' => :destroy
+  end
 
-  get 'store/index'
+  #(:locale)の括弧はURLにおけるロケール設定が省略化を意味する
+  scope '(:locale)' do
+    resources :users
+    resources :orders
+    resources :line_items
+    resources :carts
+    resources :products do
+      get :who_bought, on: :member
+    end
+    #ルートパスにstoreコントローラーのindexメソッドを設定
+    #as:'store'でstore_pathメソッド追加
+    root to: 'store#index', as: 'store'
+  end
 
-  resources :products
 
-  #ルートパスにstoreコントローラーのindexメソッドを設定
-  #as:'store'でstore_pathメソッド追加
-  root to: 'store#index', as: 'store'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

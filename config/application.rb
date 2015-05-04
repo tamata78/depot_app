@@ -21,6 +21,23 @@ module Depot
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
+    I18n.available_locales = [:en,:es, :ja]
+    I18n.enforce_available_locales = true
+    I18n.default_locale = :ja
     # config.i18n.default_locale = :de
+
+    Depot::Application.configure do
+        config.action_mailer.delivery_method = :smtp
+
+        config.action_mailer.smtp_settings = {
+            address: "smtp.gmail.com",
+            port: 587,
+            domain: "domain.of.sender.net",
+            authentication: "plain",
+            user_name: "dave",
+            password: "secret",
+            enable_starttls_auto: true
+        }
+    end
   end
 end
